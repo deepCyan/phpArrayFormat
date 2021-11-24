@@ -1,7 +1,7 @@
 <?php
 namespace PhpArrayFormat;
 
-use PhpArrayFormat\Interfaces\ArrayFormatInterface;
+use PhpArrayFormat\interfaces\ArrayFormatInterface;
 use PhpArrayFormat\StrHelper\StrHelper;
 
 class Format implements ArrayFormatInterface

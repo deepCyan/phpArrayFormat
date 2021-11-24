@@ -1,5 +1,5 @@
 <?php
-namespace PhpArrayFormat\Interfaces;
+namespace PhpArrayFormat\interfaces;
 
 interface ArrayFormatInterface {
     /**
