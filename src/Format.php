@@ -4,7 +4,7 @@ namespace PhpArrayFormat;
 use PhpArrayFormat\Interfaces\ArrayFormatInterface;
 use PhpArrayFormat\StrHelper\StrHelper;
 
-class PhpArrayFormat implements ArrayFormatInterface
+class Format implements ArrayFormatInterface
 {
     public function __construct(array $data = [])
     {
