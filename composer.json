@@ -1,0 +1,13 @@
+{
+    "name": "yunqing/php-array-format",
+    "authors": [
+        {
+            "name": "wangxu",
+            "email": "yunqing@love.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0.0 || ^8.0",
+        "ext-mbstring": "*"
+    }
+}
