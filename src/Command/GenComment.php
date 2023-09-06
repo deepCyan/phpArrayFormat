@@ -71,14 +71,8 @@ class GenComment
 
     private function fillMethods(&$methods)
     {
-        // array_push($methods, '*');
-        array_push($methods, '*/');
-
-        // array_unshift($methods, '*');
+        $methods[] = '*/';
         array_unshift($methods, '/**');
-        // array_unshift($methods, PHP_EOL);
-        // array_unshift($methods, 'namespace App\Format;');
-        // array_unshift($methods, PHP_EOL);
     }
 
     private function readFile(string $filePath)
