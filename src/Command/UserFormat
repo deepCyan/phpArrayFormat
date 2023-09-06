@@ -1,7 +1,14 @@
-<?php
-require __DIR__ . '/../vendor/autoload.php';
-use PhpArrayFormat\Format;
-
+<?php/**
+* @method getUserId()
+* @method getUserName()
+* @method getPassword()
+* @method getEmail()
+*
+* @method setUserId($value)
+* @method setUserName($value)
+* @method setPassword($value)
+* @method setEmail($value)
+*/
 class UserFormat extends Format
 {
     protected $user_id;
