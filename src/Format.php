@@ -64,10 +64,30 @@ class Format implements ArrayFormatInterface
         $ref = new \ReflectionClass($this);
         $proper = $ref->getProperties();
         $res = [];
-        foreach ($proper as $key => $value) {
+        foreach ($proper as $value) {
             /* @var $value \ReflectionProperty */
             if ($value->getModifiers() == $value::IS_PROTECTED) {
                 array_push($res, $value->name);
+            }
+        }
+        return $res;
+    }
+
+    public function getAllProtectedWithType()
+    {
+        $ref = new \ReflectionClass($this);
+        $proper = $ref->getProperties();
+        $res = [];
+        foreach ($proper as $value) {
+            /* @var $value \ReflectionProperty */
+            if ($value->getModifiers() == $value::IS_PROTECTED) {
+                $_p = [];
+                $_p['name'] = $value->name;
+                $_p['type'] = null;
+                if (! is_null($value->getType())) {
+                    $_p['type'] = $value->getType()->getName();
+                }
+                $res[] = $_p;
             }
         }
         return $res;
