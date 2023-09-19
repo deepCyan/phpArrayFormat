@@ -39,6 +39,7 @@ class GenComment
 
     private function getMethods(array $pros, array $typeMap)
     {
+        $className = $this->getClassName();
         $res = [];
         // getter
         foreach ($pros as $key => $pro) {
@@ -54,15 +55,16 @@ class GenComment
         // setter
         foreach ($pros as $key => $pro) {
             if (is_null($typeMap[$pro]['type'])) {
-                $res[] = '* @method ' . $this->strHelper->camel('set_' . $pro . '($value)');
+                $res[] = sprintf('* @method %s %s', $className,  $this->strHelper->camel('set_' . $pro . '($value)'));
             } else {
-                $res[] = '* @method ' . $this->strHelper->camel('set_' . $pro . '(# $value)');
+                $res[] = sprintf('* @method %s %s', $className, $this->strHelper->camel('set_' . $pro . '(# $value)'));
             }
         }
+
         // 因为转了驼峰, 要在这里处理一下类型数据
         foreach ($res as &$m) {
             if (strpos($m, '#') !== false) {
-                $_pro = str_replace('* @method set', '', $m);
+                $_pro = str_replace('* @method '. $className .' set', '', $m);
                 $_pro = str_replace('(#$value)', '', $_pro);
                 $_pro = $this->strHelper->snake($_pro);
                 $m = str_replace('#', $typeMap[$_pro]['type'] . ' ', $m);
@@ -91,5 +93,11 @@ class GenComment
         $file = fopen($filePath, 'w+');
         fwrite($file, $newFile);
         fclose($file);
+    }
+
+    private function getClassName()
+    {
+        $arr = explode('\\', $this->classPath);
+        return end($arr);
     }
 }
