@@ -1,38 +1,29 @@
 <?php
 namespace PhpArrayFormat\Command;
-require_once __DIR__ . '/../../vendor/autoload.php';
 
 use PhpArrayFormat\Format;
 use PhpArrayFormat\StrHelper\StrHelper;
 
 class GenComment
 {
-    protected $inputs = [];
+    protected $classPath;
 
     protected $strHelper;
 
-    public function __construct(array $i)
+    public function __construct(string $classPath)
     {
-        $this->inputs = $i;
+        $this->classPath = $classPath;
         $this->strHelper = new StrHelper();
     }
 
     public function run()
     {
-        $classPath = $this->inputs[1] ?? '';
-        if (empty($classPath)) {
-            echo 'empty class path' . PHP_EOL;
-            return;
-        }
-        if (! file_exists($classPath)) {
+        if (! class_exists($this->classPath)) {
             echo 'file not found' . PHP_EOL;
             return;
         }
-        require_once $classPath;
-        $classNameEx = explode('/', $classPath);
-        $fileName = $classNameEx[count($classNameEx) - 1];
-        $className = str_replace('.php', '', $fileName);
-        $class = new $className();
+
+        $class = new $this->classPath();
         if (! $class instanceof Format) {
             echo 'not instance of format' . PHP_EOL;
             return;
@@ -90,6 +81,3 @@ class GenComment
         fclose($file);
     }
 }
-
-$command = new GenComment($argv);
-$command->run();
