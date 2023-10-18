@@ -3,8 +3,10 @@ namespace PhpArrayFormat;
 
 use PhpArrayFormat\interfaces\ArrayFormatInterface;
 use PhpArrayFormat\StrHelper\StrHelper;
+use IteratorAggregate;
+use JsonSerializable;
 
-class Format implements ArrayFormatInterface
+class Format implements ArrayFormatInterface, IteratorAggregate, JsonSerializable
 {
     public function __construct(array $data = [])
     {
@@ -13,6 +15,16 @@ class Format implements ArrayFormatInterface
             $method = $strHelper->camel('set_' . $key);
             $this->{$method}($value);
         }
+    }
+
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->toArray());
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 
     public function toArray(): array

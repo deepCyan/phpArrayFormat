@@ -20,7 +20,6 @@ $user = [
 ];
 
 $format = new UserFormat($user);
-
 // var_dump($format->toArray());
 // var_dump($format->toArrayNotNull());
 // var_dump($format->getUserId());
