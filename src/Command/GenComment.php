@@ -16,17 +16,18 @@ class GenComment
         $this->strHelper = new StrHelper();
     }
 
-    public function run()
+    /**
+     * @throws \Exception
+     */
+    public function run(bool $out = true): string
     {
         if (! class_exists($this->classPath)) {
-            echo 'file not found' . PHP_EOL;
-            return;
+            throw new \Exception('file not found');
         }
 
         $class = new $this->classPath();
         if (! $class instanceof Format) {
-            echo 'not instance of format' . PHP_EOL;
-            return;
+            throw new \Exception('not instance of format');
         }
         $allProperties = $class->getAllProtectedWithType();
         $allPropertieNames = array_column($allProperties, 'name');
@@ -34,7 +35,10 @@ class GenComment
         $methods = $this->getMethods($allPropertieNames, $typeMap);
         $this->fillMethods($methods, $allProperties);
         $notesStr = implode(PHP_EOL, $methods) . PHP_EOL;
-        echo $notesStr . PHP_EOL;
+        if ($out) {
+            echo $notesStr . PHP_EOL;
+        }
+        return $notesStr;
     }
 
     private function getMethods(array $pros, array $typeMap)

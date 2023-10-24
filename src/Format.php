@@ -53,18 +53,17 @@ class Format implements ArrayFormatInterface, IteratorAggregate, JsonSerializabl
     public function __call($name, $args)
     {
         $strHelper = new StrHelper();
-        if (substr($name, 0, 3) == 'get') {
-            $field = $strHelper->snake(substr($name, 3));
-
+        $methodType = substr($name, 0, 3);
+        $field = $strHelper->snake(substr($name, 3));
+        if ($methodType == 'get') {
             return $this->{$field} ?? null;
         }
 
-        if (substr($name, 0, 3) == 'set') {
-            $field = $strHelper->snake(substr($name, 3));
-            if (property_exists($this, $field)) {
-                $this->{$field} = $args[0] ?? null;
+        if ($methodType == 'set') {
+            if (! property_exists($this, $field)) {
+                throw new \Exception('call to undefined field: ' . $field);
             }
-
+            $this->{$field} = $args[0] ?? null;
             return $this;
         }
 

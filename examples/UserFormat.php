@@ -4,13 +4,15 @@ use PhpArrayFormat\Format;
 
 class UserFormat extends Format
 {
-    protected $user_id;
+    protected int $user_id = 0;
 
-    protected $user_name;
+    protected string $user_name = '';
 
-    protected $password;
+    protected string $password = '';
 
-    protected $email;
+    protected string $email = '';
+
+    protected int $age = 0;
 }
 $user = [
     'user_name' => 'zhihui',
@@ -20,7 +22,11 @@ $user = [
 ];
 
 $format = new UserFormat($user);
-// var_dump($format->toArray());
-// var_dump($format->toArrayNotNull());
-// var_dump($format->getUserId());
-// $format->setEmail('test@test.com');
+var_dump($format->toArray());
+var_dump($format->toArrayNotNull());
+var_dump($format->getUserId());
+$format->setEmail('test@test.com');
+try {
+    (new \PhpArrayFormat\Command\GenComment(UserFormat::class))->run();
+} catch (Exception $e) {
+}
