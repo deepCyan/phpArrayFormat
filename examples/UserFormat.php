@@ -26,7 +26,16 @@ var_dump($format->toArray());
 var_dump($format->toArrayNotNull());
 var_dump($format->getUserId());
 $format->setEmail('test@test.com');
-try {
-    (new \PhpArrayFormat\Command\GenComment(UserFormat::class))->run();
-} catch (Exception $e) {
-}
+var_dump($format->getEmail());
+
+echo '--------------' . PHP_EOL;
+
+$format2 = new UserFormat();
+$json = json_encode($user);
+$format2->mergeFromJson($json);
+var_dump($format2->getPassword());
+$format2->setPassword('111ppp');
+var_dump($format2->getPassword());
+var_dump($format2->getUserId());
+$format2->setUserId(99);
+var_dump($format2->getUserId());

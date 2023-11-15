@@ -10,11 +10,7 @@ class Format implements ArrayFormatInterface, IteratorAggregate, JsonSerializabl
 {
     public function __construct(array $data = [])
     {
-        $strHelper = new StrHelper();
-        foreach ($data as $key => $value) {
-            $method = $strHelper->camel('set_' . $key);
-            $this->{$method}($value);
-        }
+        $this->setValue($data);
     }
 
     public function getIterator()
@@ -102,5 +98,21 @@ class Format implements ArrayFormatInterface, IteratorAggregate, JsonSerializabl
             }
         }
         return $res;
+    }
+
+    public function mergeFromJson(string $json)
+    {
+        $data = json_decode($json, true);
+        return $this->setValue($data);
+    }
+
+    private function setValue(array $data)
+    {
+        $strHelper = new StrHelper();
+        foreach ($data as $key => $value) {
+            $method = $strHelper->camel('set_' . $key);
+            $this->{$method}($value);
+        }
+        return $this;
     }
 }
