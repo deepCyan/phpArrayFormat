@@ -39,3 +39,5 @@ var_dump($format2->getPassword());
 var_dump($format2->getUserId());
 $format2->setUserId(99);
 var_dump($format2->getUserId());
+
+echo $format2 . PHP_EOL;

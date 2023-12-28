@@ -106,6 +106,11 @@ class Format implements ArrayFormatInterface, IteratorAggregate, JsonSerializabl
         return $this->setValue($data);
     }
 
+    public function __toString(): string
+    {
+        return json_encode($this->toArray(), JSON_UNESCAPED_UNICODE);
+    }
+
     private function setValue(array $data)
     {
         $strHelper = new StrHelper();
